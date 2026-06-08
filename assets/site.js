@@ -8,6 +8,22 @@
   const fine   = window.matchMedia('(pointer: fine)').matches;
   if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
+  /* ---- navigate via JS so the browser status bar doesn't preview URLs on hover ---- */
+  document.querySelectorAll('a[href]').forEach(a=>{
+    a.dataset.href = a.getAttribute('href');
+    if (a.target) a.dataset.target = a.target;
+    a.removeAttribute('href'); a.removeAttribute('target');
+    a.setAttribute('role','link');
+    if (!a.hasAttribute('tabindex')) a.setAttribute('tabindex','0');
+  });
+  function navigate(a,e){
+    const url=a.dataset.href; if(!url) return;
+    if (a.dataset.target==='_blank' || (e && (e.metaKey||e.ctrlKey))) window.open(url,'_blank','noopener');
+    else window.location.href=url;
+  }
+  document.addEventListener('click', e=>{ const a=e.target.closest('[data-href]'); if(a) navigate(a,e); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Enter'){ const a=e.target.closest&&e.target.closest('[data-href]'); if(a){ e.preventDefault(); navigate(a,e);} } });
+
   /* ---- custom cursor: dot tracks pointer 1:1 ---- */
   if (fine){
     const dot = document.querySelector('.cursor-dot');
@@ -23,12 +39,15 @@
   function splitLetters(root){
     const walk = node=>{
       [...node.childNodes].forEach(n=>{
-        if(n.nodeType===3){                                  // text node → wrap each char
+        if(n.nodeType===3){                                  // text node → words(.rw) made of letters(.rl)
           const frag=document.createDocumentFragment();
-          for(const ch of n.textContent){
-            if(ch===' ') frag.appendChild(document.createTextNode(' '));
-            else { const s=document.createElement('span'); s.className='rl'; s.textContent=ch; frag.appendChild(s); }
-          }
+          n.textContent.split(/(\s+)/).forEach(part=>{
+            if(part==='') return;
+            if(/^\s+$/.test(part)){ frag.appendChild(document.createTextNode(part)); return; }   // keep spaces breakable
+            const w=document.createElement('span'); w.className='rw';
+            for(const ch of part){ const s=document.createElement('span'); s.className='rl'; s.textContent=ch; w.appendChild(s); }
+            frag.appendChild(w);
+          });
           node.replaceChild(frag,n);
         } else if(n.nodeType===1 && n.tagName!=='BR'){ walk(n); }   // recurse into <em> etc.
       });

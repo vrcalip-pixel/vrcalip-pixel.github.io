@@ -54,7 +54,7 @@ body:not(.landing) .bar.top{mix-blend-mode:normal;
   background:rgba(8,19,37,.78);
   backdrop-filter:blur(12px) saturate(130%);-webkit-backdrop-filter:blur(12px) saturate(130%);
   border-bottom:1px solid var(--line)}
-.bar.bottom{bottom:0;justify-content:flex-end;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cream-dim)}
+.bar.bottom{bottom:0;justify-content:flex-end;padding-right:clamp(14px,2.5vw,30px);font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cream-dim)}
 .brand{font-family:"Fraunces";font-weight:600;font-size:20px;letter-spacing:-.01em;color:var(--cream);text-decoration:none}
 .brand span{color:var(--gold)}
 .navlinks{display:flex;gap:26px;font-family:"JetBrains Mono",monospace;font-size:13px;text-transform:uppercase;letter-spacing:.14em}

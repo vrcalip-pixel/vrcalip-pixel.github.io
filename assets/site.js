@@ -33,7 +33,7 @@
   }
 
   /* ---- letter-level ripple: an expanding wavefront rolls across the text ---- */
-  const RIPPLE_SEL = '[data-hero-line], .eyebrow, .hero-sub, .page-title, .page-intro, .sec-title, .lead, .project h3, .talk .ttl, .card h3, .page-cta .big';
+  const RIPPLE_SEL = '[data-hero-line], .eyebrow, .hero-sub, .page-title, .page-intro, .sec-title, .lead, .project h3, .talk .ttl, .tl-venue, .card h3, .page-cta .big';
   let letters = [], centers = [], prevY = null, waves = [], raf = null;
 
   function splitLetters(root){
@@ -157,6 +157,109 @@
       }});
     });
   }
+
+  /* ---- speaking timeline: glass slider (only if .tl-track present) ---- */
+  (function glassSlider(){
+    const track = document.querySelector('.tl-track');
+    if(!track) return;
+    const ticks = [...track.querySelectorAll('.tl-tick')];
+    const thumb = track.querySelector('.tl-thumb');
+    const roDate = document.querySelector('.tl-readout-date');
+    const roName = document.querySelector('.tl-readout-name');
+    if(!ticks.length || !thumb) return;
+
+    const n = ticks.length;
+    const R = 14;                                 // half thumb width — keep in sync with CSS
+    const items = ticks.map(t=>({el:t, i:+t.dataset.index, target:t.dataset.target, date:t.dataset.date, name:t.dataset.name}));
+    let cur = 0, dragging = false;
+
+    const frac  = i => n>1 ? i/(n-1) : 0;
+    const setP  = p => track.style.setProperty('--p', p);
+    function setActive(i){
+      items.forEach((it,k)=> it.el.classList.toggle('is-active', k===i));
+      if(roDate) roDate.textContent = items[i].date;
+      if(roName) roName.textContent = items[i].name;
+      track.setAttribute('aria-valuenow', i+1);
+      track.setAttribute('aria-valuetext', items[i].date + ', ' + items[i].name);
+    }
+    function flash(el){
+      el.classList.remove('tl-flash'); void el.offsetWidth; el.classList.add('tl-flash');
+      el.addEventListener('animationend', ()=>el.classList.remove('tl-flash'), {once:true});
+    }
+    function select(i, scroll){
+      i = Math.max(0, Math.min(n-1, i));
+      cur = i; setP(frac(i)); setActive(i);
+      if(scroll){
+        const el = document.getElementById(items[i].target);
+        if(el){ el.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'}); flash(el); }
+      }
+    }
+
+    function fracFromX(x){
+      const r = track.getBoundingClientRect();
+      const usable = r.width - 2*R;
+      return usable>0 ? Math.max(0, Math.min(1, (x - r.left - R)/usable)) : 0;
+    }
+    const nearest = f => Math.round(f*(n-1));
+
+    items.forEach(it=> it.el.addEventListener('click', e=>{ e.preventDefault(); select(it.i, true); }));
+
+    /* drag the thumb */
+    function onMove(e){
+      if(!dragging) return;
+      const f = fracFromX(e.clientX);
+      setP(f);                                    // continuous travel
+      const i = nearest(f);
+      if(i!==cur){ cur=i; setActive(i); }         // readout snaps to nearest
+    }
+    function onUp(){
+      if(!dragging) return;
+      dragging=false; track.classList.remove('is-dragging');
+      document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerup', onUp);
+      select(cur, true);                          // snap + scroll
+    }
+    thumb.addEventListener('pointerdown', e=>{
+      e.preventDefault();
+      dragging=true; track.classList.add('is-dragging');
+      document.addEventListener('pointermove', onMove);
+      document.addEventListener('pointerup', onUp);
+    });
+
+    /* tap anywhere on the track (not a tick/thumb) → jump to nearest */
+    track.addEventListener('pointerdown', e=>{
+      if(e.target===thumb || (e.target.closest && e.target.closest('.tl-tick'))) return;
+      select(nearest(fracFromX(e.clientX)), true);
+    });
+
+    /* keyboard */
+    track.addEventListener('keydown', e=>{
+      let i = cur;
+      if(e.key==='ArrowRight'||e.key==='ArrowDown') i=cur+1;
+      else if(e.key==='ArrowLeft'||e.key==='ArrowUp') i=cur-1;
+      else if(e.key==='Home') i=0;
+      else if(e.key==='End') i=n-1;
+      else return;
+      e.preventDefault(); select(i, true);
+    });
+
+    /* keep the slider synced to whatever engagement is on screen */
+    if('IntersectionObserver' in window){
+      const byTarget = Object.fromEntries(items.map(it=>[it.target, it.i]));
+      const io = new IntersectionObserver(entries=>{
+        if(dragging) return;
+        entries.forEach(en=>{
+          if(en.isIntersecting){
+            const i = byTarget[en.target.id];
+            if(i!=null && i!==cur){ cur=i; setP(frac(i)); setActive(i); }
+          }
+        });
+      }, {rootMargin:'-45% 0px -45% 0px', threshold:0});
+      document.querySelectorAll('.tl-item[id]').forEach(it=>io.observe(it));
+    }
+
+    select(0, false);                             // init
+  })();
 
   /* ---- 3D tilt cards ---- */
   if (fine && window.gsap){

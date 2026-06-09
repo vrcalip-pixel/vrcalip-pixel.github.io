@@ -221,6 +221,16 @@ h1 em{font-style:italic;color:var(--gold)}
 .sub-head span{color:var(--cream-dim)}
 .degree-math{margin-top:0}
 
+/* inline enroll link under the course grid (Learn page) */
+.enroll-row{margin-top:clamp(28px,4vh,40px)}
+.enroll-link{display:inline-flex;align-items:center;gap:9px;
+  font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--cream);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:4px;
+  transition:color .25s,border-color .25s}
+.enroll-link:hover{color:var(--gold);border-color:var(--gold)}
+.enroll-link .arw{transition:transform .3s var(--ease)}
+.enroll-link:hover .arw{transform:translate(4px,0)}
+
 /* stackable credentials callout (Learn page) */
 .stack{margin-top:clamp(34px,5vh,52px);padding:clamp(26px,4vh,38px) clamp(24px,4vw,40px);
   border:1px solid var(--line);border-radius:18px;

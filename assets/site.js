@@ -158,6 +158,38 @@
     });
   }
 
+  /* ---- speaking timeline: jump rail (only if .tl-rail present) ---- */
+  (function jumpRail(){
+    const rail = document.querySelector('.tl-rail');
+    if(!rail) return;
+    const stops = [...rail.querySelectorAll('.tl-stop[data-target]')];
+    if(!stops.length) return;
+
+    function goTo(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+      el.classList.remove('tl-flash'); void el.offsetWidth;   // restart the flash
+      el.classList.add('tl-flash');
+      el.addEventListener('animationend', ()=>el.classList.remove('tl-flash'), {once:true});
+    }
+    stops.forEach(s=> s.addEventListener('click', ()=>goTo(s.dataset.target)) );
+
+    /* keep the active stop in sync with what's on screen */
+    if('IntersectionObserver' in window){
+      const byId = Object.fromEntries(stops.map(s=>[s.dataset.target, s]));
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){
+            stops.forEach(s=>s.classList.remove('is-active'));
+            const s = byId[en.target.id]; if(s) s.classList.add('is-active');
+          }
+        });
+      }, {rootMargin:'-45% 0px -45% 0px', threshold:0});
+      document.querySelectorAll('.tl-item[id]').forEach(it=>io.observe(it));
+    }
+  })();
+
   /* ---- 3D tilt cards ---- */
   if (fine && window.gsap){
     document.querySelectorAll('[data-tilt]').forEach(card=>{

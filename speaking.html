@@ -34,14 +34,53 @@
   </div>
 </section>
 
-<!-- timeline -->
-<section class="block">
+<!-- interactive timeline rail (jump-to) -->
+<section class="block tl-rail-block">
   <div class="wrap">
-    <div class="sec-head" data-reveal><span class="sec-num">01</span><span class="sec-title">Recent engagements</span></div>
+    <div class="sec-head" data-reveal><span class="sec-num">01</span><span class="sec-title">The timeline</span></div>
+    <nav class="tl-rail" aria-label="Jump to an engagement" data-reveal>
+      <button class="tl-stop" type="button" data-target="tl-selectla" data-cursor>
+        <span class="tl-stop-dot" aria-hidden="true"></span>
+        <span class="tl-stop-date">Apr 2026</span>
+        <span class="tl-stop-name">SelectLA Summit</span>
+      </button>
+      <button class="tl-stop" type="button" data-target="tl-asccc" data-cursor>
+        <span class="tl-stop-dot" aria-hidden="true"></span>
+        <span class="tl-stop-date">2026</span>
+        <span class="tl-stop-name">ASCCC</span>
+      </button>
+      <button class="tl-stop" type="button" data-target="tl-cabinet" data-cursor>
+        <span class="tl-stop-dot" aria-hidden="true"></span>
+        <span class="tl-stop-date">Dec 2025</span>
+        <span class="tl-stop-name">President's Cabinet</span>
+      </button>
+      <button class="tl-stop" type="button" data-target="tl-cccaoe" data-cursor>
+        <span class="tl-stop-dot" aria-hidden="true"></span>
+        <span class="tl-stop-date">Oct 2025</span>
+        <span class="tl-stop-name">CCCAOE Fall</span>
+      </button>
+      <button class="tl-stop" type="button" data-target="tl-miami" data-cursor>
+        <span class="tl-stop-dot" aria-hidden="true"></span>
+        <span class="tl-stop-date">Sep 2025</span>
+        <span class="tl-stop-name">Miami Dade</span>
+      </button>
+      <button class="tl-stop" type="button" data-target="tl-summit" data-cursor>
+        <span class="tl-stop-dot" aria-hidden="true"></span>
+        <span class="tl-stop-date">Aug 2025</span>
+        <span class="tl-stop-name">Virtual AI Summit</span>
+      </button>
+    </nav>
+    <p class="tl-rail-hint" data-reveal>↳ click a stop to jump to that engagement</p>
+  </div>
+</section>
+
+<!-- timeline -->
+<section class="block tl-list-block">
+  <div class="wrap">
 
     <div class="timeline">
 
-      <article class="tl-item" data-reveal>
+      <article class="tl-item" id="tl-selectla" data-reveal>
         <span class="tl-node" aria-hidden="true"></span>
         <div class="tl-meta"><span class="tl-date">Apr 2026</span><span class="tl-kind">Panel</span></div>
         <h3 class="tl-venue">LAEDC SelectLA Investment Summit</h3>
@@ -50,16 +89,7 @@
         <p class="tl-synopsis">A summit panel on AI collaboration and regional economic development — how education and industry align, and the role community colleges play in preparing learners and institutions for an AI-enabled workforce.</p>
       </article>
 
-      <article class="tl-item" data-reveal>
-        <span class="tl-node" aria-hidden="true"></span>
-        <div class="tl-meta"><span class="tl-date">Apr 2026</span><span class="tl-kind">Faculty Keynote</span></div>
-        <h3 class="tl-venue">LBCC Flex Day</h3>
-        <div class="tl-where">Long Beach City College</div>
-        <div class="tl-session">Reclaiming Joy: Human-First Teaching in the AI Era</div>
-        <p class="tl-synopsis">A faculty session on keeping teaching human as AI enters the classroom — equity, instructional technology, and curriculum design in service of the relational, irreplaceable parts of education rather than against them.</p>
-      </article>
-
-      <article class="tl-item" data-reveal>
+      <article class="tl-item" id="tl-asccc" data-reveal>
         <span class="tl-node" aria-hidden="true"></span>
         <div class="tl-meta"><span class="tl-date">2026</span><span class="tl-kind">Conference Session</span></div>
         <h3 class="tl-venue">ASCCC — AI &amp; Academia: Navigating the Future</h3>
@@ -68,7 +98,7 @@
         <p class="tl-synopsis">A statewide session on redesigning assessment around project- and work-based learning — treating AI as a structured collaborator, and grounding it in transparency, reflection, equity, ethical use, and workforce relevance.</p>
       </article>
 
-      <article class="tl-item" data-reveal>
+      <article class="tl-item" id="tl-cabinet" data-reveal>
         <span class="tl-node" aria-hidden="true"></span>
         <div class="tl-meta"><span class="tl-date">Dec 2025</span><span class="tl-kind">Executive Briefing</span></div>
         <h3 class="tl-venue">LBCC President's Cabinet</h3>
@@ -77,7 +107,7 @@
         <p class="tl-synopsis">An institutional overview for college leadership — walking the Cabinet through LBCC's AI certificates, degree pathways, and the academic structure carrying AI literacy and applied AI into digital transformation.</p>
       </article>
 
-      <article class="tl-item" data-reveal>
+      <article class="tl-item" id="tl-cccaoe" data-reveal>
         <span class="tl-node" aria-hidden="true"></span>
         <div class="tl-meta"><span class="tl-date">Oct 2025</span><span class="tl-kind">Panel</span></div>
         <h3 class="tl-venue">CCCAOE Fall 2025</h3>
@@ -86,7 +116,7 @@
         <p class="tl-synopsis">A panel with Lynn Dickinson and Dr. Norma Jones on how AI reshapes assessment design — making the case for project-based and work-based learning, authentic assessment, and workforce-aligned instructional practice.</p>
       </article>
 
-      <article class="tl-item" data-reveal>
+      <article class="tl-item" id="tl-miami" data-reveal>
         <span class="tl-node" aria-hidden="true"></span>
         <div class="tl-meta"><span class="tl-date">Sep 2025</span><span class="tl-kind">Institutional Collaboration</span></div>
         <h3 class="tl-venue">Colleges Collaborate to Accelerate AI Innovation</h3>
@@ -95,7 +125,7 @@
         <p class="tl-synopsis">Remarks on LBCC's emerging AI curriculum — the AI Literacy certificate and the developing A.S. in AI for Digital Transformation — alongside the rapid program development, industry partnerships, and AI-clinic strategy behind it.</p>
       </article>
 
-      <article class="tl-item" data-reveal>
+      <article class="tl-item" id="tl-summit" data-reveal>
         <span class="tl-node" aria-hidden="true"></span>
         <div class="tl-meta"><span class="tl-date">Aug 2025</span><span class="tl-kind">Workshop &amp; Panel</span></div>
         <h3 class="tl-venue">Virtual AI Summit — AI in Higher Education</h3>

@@ -179,6 +179,31 @@ h1 em{font-style:italic;color:var(--gold)}
 .card h3{font-family:"Fraunces";font-weight:400;font-size:23px;margin:14px 0 10px;letter-spacing:-.01em}
 .card p{font-size:14.5px;color:var(--cream-dim)}
 
+/* curriculum: AI Core / Full Degree toggle (Learn page) */
+.track-toggle{display:inline-flex;gap:4px;padding:4px;margin-bottom:clamp(32px,5vh,50px);
+  border:1px solid var(--line);border-radius:100px;background:rgba(14,30,51,.4)}
+.track-btn{appearance:none;border:0;background:none;cursor:none;
+  font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cream-dim);padding:10px 22px;border-radius:100px;
+  transition:color .25s,background-color .35s var(--ease)}
+.track-btn:not(.active):hover{color:var(--cream)}
+.track-btn.active{color:var(--ink);background:var(--gold)}
+@media (pointer:coarse){.track-btn{cursor:pointer}}
+
+/* Full Degree reveal — collapsed by default, expands via grid-rows */
+.degree-extra{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;
+  transition:grid-template-rows .55s var(--ease),opacity .45s ease,margin-top .55s var(--ease)}
+.degree-extra-inner{overflow:hidden;min-height:0}
+.curriculum.show-full .degree-extra{grid-template-rows:1fr;opacity:1;margin-top:clamp(40px,6vh,72px)}
+.sub-head{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:22px}
+.sub-head span{color:var(--cream-dim)}
+/* foundation courses: calmer, lighter than the AI core cards */
+.card.minor{padding:24px 22px;background:linear-gradient(160deg,rgba(14,30,51,.55),rgba(10,22,40,.4))}
+.card.minor h3{font-size:19px;margin:12px 0 9px}
+.card.minor p{font-size:13.5px}
+.degree-math{margin-top:clamp(30px,5vh,48px)}
+
 /* talk rows (Speaking page) */
 .talk{display:grid;grid-template-columns:110px 1fr auto;gap:24px;align-items:baseline;padding:26px 0;border-top:1px solid var(--line);transition:padding-left .3s var(--ease)}
 .talk:last-child{border-bottom:1px solid var(--line)}

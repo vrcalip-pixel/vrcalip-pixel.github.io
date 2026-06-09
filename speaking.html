@@ -38,39 +38,27 @@
 <section class="block tl-rail-block">
   <div class="wrap">
     <div class="sec-head" data-reveal><span class="sec-num">01</span><span class="sec-title">The timeline</span></div>
-    <nav class="tl-rail" aria-label="Jump to an engagement" data-reveal>
-      <button class="tl-stop" type="button" data-target="tl-selectla" data-cursor>
-        <span class="tl-stop-dot" aria-hidden="true"></span>
-        <span class="tl-stop-date">Apr 2026</span>
-        <span class="tl-stop-name">SelectLA Summit</span>
-      </button>
-      <button class="tl-stop" type="button" data-target="tl-asccc" data-cursor>
-        <span class="tl-stop-dot" aria-hidden="true"></span>
-        <span class="tl-stop-date">Mar 2026</span>
-        <span class="tl-stop-name">ASCCC</span>
-      </button>
-      <button class="tl-stop" type="button" data-target="tl-cabinet" data-cursor>
-        <span class="tl-stop-dot" aria-hidden="true"></span>
-        <span class="tl-stop-date">Dec 2025</span>
-        <span class="tl-stop-name">President's Cabinet</span>
-      </button>
-      <button class="tl-stop" type="button" data-target="tl-cccaoe" data-cursor>
-        <span class="tl-stop-dot" aria-hidden="true"></span>
-        <span class="tl-stop-date">Oct 2025</span>
-        <span class="tl-stop-name">CCCAOE Fall</span>
-      </button>
-      <button class="tl-stop" type="button" data-target="tl-miami" data-cursor>
-        <span class="tl-stop-dot" aria-hidden="true"></span>
-        <span class="tl-stop-date">Sep 2025</span>
-        <span class="tl-stop-name">Miami Dade</span>
-      </button>
-      <button class="tl-stop" type="button" data-target="tl-summit" data-cursor>
-        <span class="tl-stop-dot" aria-hidden="true"></span>
-        <span class="tl-stop-date">Aug 2025</span>
-        <span class="tl-stop-name">Virtual AI Summit</span>
-      </button>
-    </nav>
-    <p class="tl-rail-hint" data-reveal>↳ click a stop to jump to that engagement</p>
+    <div class="tl-slider" data-reveal>
+      <div class="tl-readout" aria-live="polite">
+        <span class="tl-readout-date">Apr 2026</span>
+        <span class="tl-readout-name">LAEDC SelectLA Investment Summit</span>
+      </div>
+      <div class="tl-track" role="slider" tabindex="0"
+           aria-label="Timeline — drag the slider or use arrow keys to move between engagements"
+           aria-valuemin="1" aria-valuemax="6" aria-valuenow="1"
+           aria-valuetext="Apr 2026, LAEDC SelectLA Investment Summit">
+        <div class="tl-track-glass" aria-hidden="true"></div>
+        <div class="tl-fill" aria-hidden="true"></div>
+        <button class="tl-tick" type="button" style="--f:0"   data-index="0" data-target="tl-selectla" data-date="Apr 2026" data-name="LAEDC SelectLA Investment Summit" aria-label="Apr 2026 — LAEDC SelectLA Investment Summit"><span class="tl-tick-date">Apr&nbsp;’26</span></button>
+        <button class="tl-tick" type="button" style="--f:.2"  data-index="1" data-target="tl-asccc"    data-date="Mar 2026" data-name="ASCCC — AI &amp; Academia: Navigating the Future" aria-label="Mar 2026 — ASCCC AI and Academia"><span class="tl-tick-date">Mar&nbsp;’26</span></button>
+        <button class="tl-tick" type="button" style="--f:.4"  data-index="2" data-target="tl-cabinet"  data-date="Dec 2025" data-name="LBCC President’s Cabinet" aria-label="Dec 2025 — LBCC President’s Cabinet"><span class="tl-tick-date">Dec&nbsp;’25</span></button>
+        <button class="tl-tick" type="button" style="--f:.6"  data-index="3" data-target="tl-cccaoe"   data-date="Oct 2025" data-name="CCCAOE Fall 2025" aria-label="Oct 2025 — CCCAOE Fall 2025"><span class="tl-tick-date">Oct&nbsp;’25</span></button>
+        <button class="tl-tick" type="button" style="--f:.8"  data-index="4" data-target="tl-miami"    data-date="Sep 2025" data-name="Colleges Collaborate to Accelerate AI Innovation" aria-label="Sep 2025 — Miami Dade College collaboration"><span class="tl-tick-date">Sep&nbsp;’25</span></button>
+        <button class="tl-tick" type="button" style="--f:1"   data-index="5" data-target="tl-summit"   data-date="Aug 2025" data-name="Virtual AI Summit — AI in Higher Education" aria-label="Aug 2025 — Virtual AI Summit"><span class="tl-tick-date">Aug&nbsp;’25</span></button>
+        <div class="tl-thumb" aria-hidden="true"></div>
+      </div>
+      <p class="tl-rail-hint">↳ drag the slider — or tap a stop — to travel the timeline</p>
+    </div>
   </div>
 </section>
 

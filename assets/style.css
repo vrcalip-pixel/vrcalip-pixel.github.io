@@ -179,18 +179,39 @@ h1 em{font-style:italic;color:var(--gold)}
 .card h3{font-family:"Fraunces";font-weight:400;font-size:23px;margin:14px 0 10px;letter-spacing:-.01em}
 .card p{font-size:14.5px;color:var(--cream-dim)}
 
-/* curriculum: AI Core / Full Degree toggle (Learn page) */
-.track-toggle{display:inline-flex;gap:4px;padding:4px;margin-bottom:clamp(32px,5vh,50px);
-  border:1px solid var(--line);border-radius:100px;background:rgba(14,30,51,.4)}
-.track-btn{appearance:none;border:0;background:none;cursor:none;
+/* curriculum: AI Core / Full Degree glass slider (Learn page) */
+.track-toggle{position:relative;display:inline-block;padding:5px;margin-bottom:clamp(32px,5vh,50px);
+  border-radius:100px;border:1px solid rgba(255,255,255,.14);
+  background:radial-gradient(120% 140% at 50% 0%, rgba(255,255,255,.06), rgba(255,255,255,0) 60%), rgba(8,19,37,.5);
+  backdrop-filter:blur(10px) saturate(130%);-webkit-backdrop-filter:blur(10px) saturate(130%);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.12), inset 0 -3px 8px rgba(0,0,0,.35)}
+.track-inner{position:relative;display:flex}
+/* the sliding glass thumb */
+.track-thumb{position:absolute;z-index:0;top:0;bottom:0;left:0;width:50%;border-radius:100px;pointer-events:none;
+  border:1px solid rgba(255,255,255,.18);
+  background:
+    radial-gradient(110% 130% at 50% 118%, rgba(255,255,255,.12), rgba(255,255,255,0) 55%),
+    radial-gradient(120% 120% at 50% 45%, rgba(0,0,0,.18) 0%, rgba(255,255,255,.10) 100%),
+    rgba(250,246,238,.06);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.45), inset 0 -4px 9px rgba(0,0,0,.28), 0 4px 14px rgba(0,0,0,.28);
+  transition:transform .42s var(--ease)}
+.track-thumb::before{content:"";position:absolute;left:3px;right:3px;top:2px;height:46%;border-radius:100px;
+  background:linear-gradient(rgba(255,255,255,.28), rgba(255,255,255,0))}
+.curriculum.show-full .track-thumb{transform:translateX(100%)}
+.track-btn{position:relative;z-index:1;flex:1;min-width:128px;text-align:center;
+  appearance:none;-webkit-appearance:none;border:0;background:none;cursor:none;
   font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--cream-dim);padding:10px 22px;border-radius:100px;
-  transition:color .25s,background-color .35s var(--ease)}
+  color:var(--cream-dim);padding:11px 22px;transition:color .3s var(--ease)}
 .track-btn:not(.active):hover{color:var(--cream)}
-.track-btn.active{color:var(--ink);background:var(--gold)}
+.track-btn.active{color:var(--gold)}
 @media (pointer:coarse){.track-btn{cursor:pointer}}
 
-/* Full Degree reveal — collapsed by default, expands via grid-rows */
+/* foundation courses merge into the same grid in Full Degree view */
+.card.foundation{display:none;background:linear-gradient(160deg,rgba(14,30,51,.62),rgba(10,22,40,.42))}
+.curriculum.show-full .card.foundation{display:block;animation:cardIn .5s var(--ease)}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* Full Degree degree-math — collapsed by default, expands via grid-rows */
 .degree-extra{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;
   transition:grid-template-rows .55s var(--ease),opacity .45s ease,margin-top .55s var(--ease)}
 .degree-extra-inner{overflow:hidden;min-height:0}
@@ -198,11 +219,7 @@ h1 em{font-style:italic;color:var(--gold)}
 .sub-head{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--gold);margin-bottom:22px}
 .sub-head span{color:var(--cream-dim)}
-/* foundation courses: calmer, lighter than the AI core cards */
-.card.minor{padding:24px 22px;background:linear-gradient(160deg,rgba(14,30,51,.55),rgba(10,22,40,.4))}
-.card.minor h3{font-size:19px;margin:12px 0 9px}
-.card.minor p{font-size:13.5px}
-.degree-math{margin-top:clamp(30px,5vh,48px)}
+.degree-math{margin-top:0}
 
 /* stackable credentials callout (Learn page) */
 .stack{margin-top:clamp(34px,5vh,52px);padding:clamp(26px,4vh,38px) clamp(24px,4vw,40px);

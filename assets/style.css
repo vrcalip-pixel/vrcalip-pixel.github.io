@@ -213,6 +213,36 @@ h1 em{font-style:italic;color:var(--gold)}
   .tl-node{left:-25px;top:34px}
 }
 
+/* speaking — interactive jump rail */
+.tl-rail-block{padding-bottom:0}
+.tl-list-block{padding-top:clamp(34px,5vh,56px)}
+.tl-item{scroll-margin-top:120px}
+.tl-rail{position:relative;display:flex;gap:0;overflow-x:auto;padding:6px 0 4px;
+  scrollbar-width:none;-ms-overflow-style:none}
+.tl-rail::-webkit-scrollbar{display:none}
+.tl-rail::before{content:"";position:absolute;left:8px;right:8px;top:13px;height:1px;
+  background:linear-gradient(90deg,rgba(242,181,68,0),var(--line) 12%,var(--line) 88%,rgba(242,181,68,0))}
+.tl-stop{position:relative;flex:1 0 auto;min-width:118px;border:0;background:none;padding:0 10px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  font-family:"JetBrains Mono",monospace;color:var(--cream-dim);
+  -webkit-tap-highlight-color:transparent}
+.tl-stop-dot{width:11px;height:11px;border-radius:50%;background:rgba(201,210,220,.38);
+  box-shadow:0 0 0 4px var(--ink);transition:background .3s var(--ease),box-shadow .3s var(--ease),transform .3s var(--ease)}
+body.ambient-on .tl-stop-dot{box-shadow:0 0 0 4px #050C1C}
+.tl-stop-date{font-size:11px;letter-spacing:.08em;color:var(--gold);margin-top:13px}
+.tl-stop-name{font-size:11px;letter-spacing:.03em;line-height:1.3;margin-top:5px;max-width:118px;transition:color .3s}
+.tl-stop:hover .tl-stop-dot,.tl-stop.is-active .tl-stop-dot{background:var(--gold);transform:scale(1.25);
+  box-shadow:0 0 0 4px var(--ink),0 0 14px rgba(242,181,68,.65)}
+body.ambient-on .tl-stop:hover .tl-stop-dot,body.ambient-on .tl-stop.is-active .tl-stop-dot{box-shadow:0 0 0 4px #050C1C,0 0 14px rgba(242,181,68,.65)}
+.tl-stop:hover .tl-stop-name,.tl-stop.is-active .tl-stop-name{color:var(--cream)}
+.tl-rail-hint{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--cream-dim);opacity:.7;margin-top:18px}
+/* brief gold wash when a stop sends you to an item */
+@keyframes tlFlash{0%{box-shadow:inset 3px 0 0 -1px var(--gold),inset 0 0 0 999px rgba(242,181,68,.10)}
+  100%{box-shadow:inset 3px 0 0 -1px rgba(242,181,68,0),inset 0 0 0 999px rgba(242,181,68,0)}}
+.tl-item.tl-flash{animation:tlFlash 1.5s var(--ease) forwards}
+@media (max-width:680px){.tl-stop{min-width:104px}.tl-stop-name{max-width:104px}}
+
 /* stat counters */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:30px 28px}
 @media (max-width:760px){.stats{grid-template-columns:1fr 1fr}}

@@ -33,7 +33,7 @@
   }
 
   /* ---- letter-level ripple: an expanding wavefront rolls across the text ---- */
-  const RIPPLE_SEL = '[data-hero-line], .eyebrow, .hero-sub, .page-title, .page-intro, .sec-title, .lead, .project h3, .talk .ttl, .card h3, .page-cta .big';
+  const RIPPLE_SEL = '[data-hero-line], .eyebrow, .hero-sub, .page-title, .page-intro, .sec-title, .lead, .project h3, .talk .ttl, .tl-venue, .card h3, .page-cta .big';
   let letters = [], centers = [], prevY = null, waves = [], raf = null;
 
   function splitLetters(root){
@@ -394,26 +394,5 @@
       setTimeout(()=>{ if(playing) return; try{ Tone.Transport.pause(); padLoop && padLoop.stop(); }catch(e){} }, 1700);
     }
     btn.addEventListener('click', ()=> playing ? disable() : enable());
-  })();
-
-  /* ---- curriculum track toggle: AI Core / Full Degree (Learn page only) ---- */
-  (function curriculumToggle(){
-    const wrap = document.querySelector('.curriculum');
-    if(!wrap) return;
-    const btns = wrap.querySelectorAll('.track-btn');
-    const extra = wrap.querySelector('.degree-extra');
-    if(!btns.length) return;
-    btns.forEach(b=>{
-      b.addEventListener('click', ()=>{
-        const full = b.dataset.track === 'full';
-        wrap.classList.toggle('show-full', full);
-        if(extra) extra.setAttribute('aria-hidden', full ? 'false' : 'true');
-        btns.forEach(o=>{
-          const on = o === b;
-          o.classList.toggle('active', on);
-          o.setAttribute('aria-selected', on ? 'true' : 'false');
-        });
-      });
-    });
   })();
 })();

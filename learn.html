@@ -54,8 +54,11 @@
     <p class="prose" data-reveal style="max-width:760px;margin-bottom:clamp(26px,4vh,40px)">Six AI courses form the core, taught with no-code and low-code tools. Each runs in two parallel tracks with the same content — a <strong>for-credit</strong> version that stacks toward the associate degree, and a <strong>tuition-free non-credit</strong> version — so you can choose the on-ramp that fits.</p>
 
     <div class="track-toggle" role="tablist" aria-label="Curriculum view" data-reveal>
-      <button class="track-btn active" data-track="core" role="tab" aria-selected="true" data-cursor>AI Core</button>
-      <button class="track-btn" data-track="full" role="tab" aria-selected="false" data-cursor>Full Degree</button>
+      <div class="track-inner">
+        <span class="track-thumb" aria-hidden="true"></span>
+        <button class="track-btn active" data-track="core" role="tab" aria-selected="true" data-cursor>AI Core</button>
+        <button class="track-btn" data-track="full" role="tab" aria-selected="false" data-cursor>Full Degree</button>
+      </div>
     </div>
 
     <div class="cards">
@@ -102,6 +105,27 @@
         <p>The capstone — analyze a real problem and ship a working AI solution end to end, then present a professional portfolio built for real-world impact.</p>
       </div>
 
+      <div class="card foundation" data-tilt>
+        <span class="glow"></span>
+        <div class="code">CS 31 · 3 units</div>
+        <h3>Introduction to Computer Science — Python</h3>
+        <p>Real programming fundamentals in Python — logic, functions, strings, and data structures — the coding literacy underneath the no-code tools.</p>
+      </div>
+
+      <div class="card foundation" data-tilt>
+        <span class="glow"></span>
+        <div class="code">COSP 38 · 4 units</div>
+        <h3>Database Concepts</h3>
+        <p>How data is modeled, stored, and queried — relational design and SQL, the backbone of every data-driven AI system.</p>
+      </div>
+
+      <div class="card foundation" data-tilt>
+        <span class="glow"></span>
+        <div class="code">COSN 250 · 3 units</div>
+        <h3>Cloud Computing in Amazon Web Services</h3>
+        <p>Where modern AI runs — cloud fundamentals on AWS, with preparation for the AWS Certified Cloud Practitioner exam.</p>
+      </div>
+
     </div>
 
     <!-- stackable credentials: earn-as-you-go milestones -->
@@ -112,8 +136,8 @@
         <div class="stack-courses"><span>AI 40</span><span>AI 45</span></div>
         <span class="stack-arw" aria-hidden="true">&#8594;</span>
         <div class="stack-cred">
-          <div><strong>Certificate of Accomplishment in AI Literacy</strong><em>for-credit</em></div>
-          <div><strong>Certificate of Completion in AI Literacy</strong><em>non-credit</em></div>
+          <div><strong>Certificate of Accomplishment, AI Literacy</strong><em>for-credit</em></div>
+          <div><strong>Certificate of Completion, AI Literacy</strong><em>non-credit</em></div>
         </div>
       </div>
       <div class="stack-more">More stackable certificates in development</div>
@@ -122,32 +146,7 @@
     <!-- revealed only in Full Degree view -->
     <div class="degree-extra" aria-hidden="true">
       <div class="degree-extra-inner">
-        <div class="sub-head">Technical foundation <span>· also required for the degree</span></div>
-        <div class="cards minor">
-
-          <div class="card minor">
-            <span class="glow"></span>
-            <div class="code">CS 31 · 3 units</div>
-            <h3>Introduction to Computer Science — Python</h3>
-            <p>Real programming fundamentals in Python — logic, functions, strings, and data structures — the coding literacy underneath the no-code tools.</p>
-          </div>
-
-          <div class="card minor">
-            <span class="glow"></span>
-            <div class="code">COSP 38 · 4 units</div>
-            <h3>Database Concepts</h3>
-            <p>How data is modeled, stored, and queried — relational design and SQL, the backbone of every data-driven AI system.</p>
-          </div>
-
-          <div class="card minor">
-            <span class="glow"></span>
-            <div class="code">COSN 250 · 3 units</div>
-            <h3>Cloud Computing in Amazon Web Services</h3>
-            <p>Where modern AI runs — cloud fundamentals on AWS, with preparation for the AWS Certified Cloud Practitioner exam.</p>
-          </div>
-
-        </div>
-
+        <div class="sub-head">Completing the associate degree</div>
         <div class="glance degree-math">
           <div><div class="k">The major</div><div class="v">Nine required courses · 28 units</div></div>
           <div><div class="k">General education</div><div class="v">LBCC-GE or Cal-GETC · 27–34 units</div></div>

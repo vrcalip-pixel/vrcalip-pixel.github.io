@@ -395,4 +395,25 @@
     }
     btn.addEventListener('click', ()=> playing ? disable() : enable());
   })();
+
+  /* ---- curriculum track toggle: AI Core / Full Degree (Learn page only) ---- */
+  (function curriculumToggle(){
+    const wrap = document.querySelector('.curriculum');
+    if(!wrap) return;
+    const btns = wrap.querySelectorAll('.track-btn');
+    const extra = wrap.querySelector('.degree-extra');
+    if(!btns.length) return;
+    btns.forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const full = b.dataset.track === 'full';
+        wrap.classList.toggle('show-full', full);
+        if(extra) extra.setAttribute('aria-hidden', full ? 'false' : 'true');
+        btns.forEach(o=>{
+          const on = o === b;
+          o.classList.toggle('active', on);
+          o.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+      });
+    });
+  })();
 })();

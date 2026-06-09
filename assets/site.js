@@ -174,8 +174,8 @@
   (function neuralField(){
     const c = document.getElementById('orbit'); if(!c) return;
     const ctx = c.getContext('2d');
-    const DPR = Math.min(window.devicePixelRatio||1,2);
-    let w,h,nodes=[];
+    const DPR = Math.min(window.devicePixelRatio||1,1.5);
+    let w,h,nodes=[],nraf=null;
     let tmx=-9999,tmy=-9999,mx=-9999,my=-9999;
     const WELL=180*DPR, SINK=0.95;
 
@@ -185,7 +185,7 @@
     }
     function buildNodes(){
       nodes=[];
-      const count=reduce?28:Math.min(120,Math.round((innerWidth*innerHeight)/15000));
+      const count=reduce?24:Math.min(95,Math.round((innerWidth*innerHeight)/17000));
       for(let i=0;i<count;i++){
         const x=Math.random()*w,y=Math.random()*h;
         nodes.push({hx:x,hy:y,x,y,vx:0,vy:0,depth:0,energy:0,_g:0,
@@ -228,14 +228,16 @@
       }
 
       if(mx>-9000){
-        let hollow=ctx.createRadialGradient(mx,my,0,mx,my,WELL);
-        hollow.addColorStop(0,'rgba(4,10,19,.55)'); hollow.addColorStop(.55,'rgba(4,10,19,.14)'); hollow.addColorStop(1,'rgba(4,10,19,0)');
-        ctx.fillStyle=hollow; ctx.fillRect(0,0,w,h);
+        const hr=WELL*1.7;
+        let hollow=ctx.createRadialGradient(mx,my,0,mx,my,hr);
+        hollow.addColorStop(0,'rgba(2,7,16,.66)'); hollow.addColorStop(.45,'rgba(2,7,16,.30)'); hollow.addColorStop(1,'rgba(2,7,16,0)');
+        ctx.fillStyle=hollow; ctx.fillRect(mx-hr,my-hr,hr*2,hr*2);
         ctx.globalCompositeOperation='lighter';
-        let rim=ctx.createRadialGradient(mx,my,WELL*.22,mx,my,WELL*.98);
+        const rr2=WELL*.98;
+        let rim=ctx.createRadialGradient(mx,my,WELL*.22,mx,my,rr2);
         rim.addColorStop(0,'rgba(242,181,68,0)'); rim.addColorStop(.60,'rgba(242,181,68,.08)');
         rim.addColorStop(.82,'rgba(255,205,107,.17)'); rim.addColorStop(1,'rgba(242,181,68,0)');
-        ctx.fillStyle=rim; ctx.fillRect(0,0,w,h);
+        ctx.fillStyle=rim; ctx.fillRect(mx-rr2,my-rr2,rr2*2,rr2*2);
         ctx.globalCompositeOperation='source-over';
       }
 
@@ -267,9 +269,10 @@
         ctx.strokeStyle=`rgba(242,181,68,${.16*fade})`; ctx.lineWidth=DPR*9*fade; ctx.stroke();
       }
       ctx.globalCompositeOperation='source-over';
-      if(!reduce) requestAnimationFrame(frame);
+      if(!reduce && !document.hidden) nraf=requestAnimationFrame(frame); else nraf=null;
     }
     if(reduce){ mx=my=-9999; }
+    document.addEventListener('visibilitychange',()=>{ if(!document.hidden && !reduce && nraf===null) nraf=requestAnimationFrame(frame); });
     frame();
   })();
 
@@ -314,5 +317,82 @@
       .on('start',(e,d)=>{ if(!e.active)sim.alphaTarget(.3).restart(); d.fx=d.x; d.fy=d.y; })
       .on('drag',(e,d)=>{ d.fx=e.x; d.fy=e.y; })
       .on('end',(e,d)=>{ if(!e.active)sim.alphaTarget(0); d.fx=null; d.fy=null; }));
+  })();
+
+  /* ---- ambient sound: generative ethereal pad, opt-in + lazy-loaded (landing only) ---- */
+  (function ambientSound(){
+    const btn = document.querySelector('[data-sound-toggle]');
+    if(!btn) return;
+    let started=false, playing=false, master, pad, lead, padLoop;
+    const scale=['D4','E4','F#4','A4','B4','D5','E5','F#5','C#5','A5'];
+    const chords=[['D3','A3','E4','F#4'],['B2','F#3','D4','C#4'],['G2','D3','A3','B3'],['A2','E3','C#4','E4']];
+
+    let starTimer=null;
+    function flyStar(){
+      if(reduce || !window.gsap) return;
+      const star=document.createElement('div'); star.className='fly-star';
+      document.body.appendChild(star);
+      const W=innerWidth, H=innerHeight;
+      const ox=W*(0.40+Math.random()*0.20), oy=H*(0.34+Math.random()*0.26);   // vanishing point near centre
+      const ang=Math.random()*Math.PI*2;
+      const dist=Math.max(W,H)*0.8;
+      const ex=ox+Math.cos(ang)*dist, ey=oy+Math.sin(ang)*dist;
+      const dur=3.8+Math.random()*2.8;                                         // slow drift
+      gsap.set(star,{x:ox,y:oy,rotation:ang*180/Math.PI,scale:0.1,opacity:0,transformOrigin:'0% 50%'});
+      gsap.timeline({onComplete:()=>star.remove()})
+        .to(star,{opacity:.85,duration:dur*0.3,ease:'power1.out'},0)
+        .to(star,{x:ex,y:ey,scale:1.15,duration:dur,ease:'power2.in'},0)        // grows → approaches the screen
+        .to(star,{opacity:0,duration:dur*0.4,ease:'power1.in'},dur*0.6);
+    }
+    function startStars(){
+      if(reduce) return;
+      const tick=()=>{ if(!playing) return; flyStar(); starTimer=setTimeout(tick, 2200+Math.random()*3200); };
+      tick();
+    }
+    function stopStars(){ clearTimeout(starTimer); }
+
+    function loadTone(){
+      return new Promise((res,rej)=>{
+        if(window.Tone) return res();
+        const s=document.createElement('script');
+        s.src='https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js';
+        s.onload=()=>res(); s.onerror=rej; document.head.appendChild(s);
+      });
+    }
+    async function build(){
+      master=new Tone.Gain(0).toDestination();
+      const reverb=new Tone.Reverb(9); await reverb.generate(); reverb.wet.value=0.62; reverb.connect(master);
+      const delay=new Tone.FeedbackDelay('4n.',0.42); delay.wet.value=0.26; delay.connect(reverb);
+      pad=new Tone.PolySynth(Tone.Synth,{oscillator:{type:'sine'},envelope:{attack:5,decay:3,sustain:0.7,release:9},volume:-22}).connect(reverb);
+      lead=new Tone.FMSynth({harmonicity:2,modulationIndex:2.4,oscillator:{type:'sine'},modulation:{type:'triangle'},envelope:{attack:0.9,decay:1.2,sustain:0.25,release:7},volume:-13}).connect(delay);
+      Tone.Transport.bpm.value=50;
+      let ci=0;
+      padLoop=new Tone.Loop(time=>{ pad.triggerAttackRelease(chords[ci%chords.length],'1m',time,0.32); ci++; },'2m');
+      const note=()=>{ if(!playing) return;
+        lead.triggerAttackRelease(scale[(Math.random()*scale.length)|0],'2n',undefined,0.4+Math.random()*0.3);
+        Tone.Transport.scheduleOnce(note, `+${1.6+Math.random()*3.6}`);
+      };
+      build._note=note; started=true;
+    }
+    async function enable(){
+      btn.classList.add('playing'); btn.setAttribute('aria-pressed','true');
+      try{ await loadTone(); await Tone.start(); if(!started) await build(); }
+      catch(e){ btn.classList.remove('playing'); btn.setAttribute('aria-pressed','false'); return; }
+      playing=true;
+      try{ padLoop.start(0); }catch(e){}
+      if(Tone.Transport.state!=='started') Tone.Transport.start();
+      build._note();
+      master.gain.rampTo(0.85, 3);
+      document.body.classList.add('ambient-on');
+      startStars();
+    }
+    function disable(){
+      playing=false;
+      document.body.classList.remove('ambient-on'); stopStars();
+      btn.classList.remove('playing'); btn.setAttribute('aria-pressed','false');
+      if(master) master.gain.rampTo(0, 1.6);
+      setTimeout(()=>{ if(playing) return; try{ Tone.Transport.pause(); padLoop && padLoop.stop(); }catch(e){} }, 1700);
+    }
+    btn.addEventListener('click', ()=> playing ? disable() : enable());
   })();
 })();

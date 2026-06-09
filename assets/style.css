@@ -204,6 +204,24 @@ h1 em{font-style:italic;color:var(--gold)}
 .card.minor p{font-size:13.5px}
 .degree-math{margin-top:clamp(30px,5vh,48px)}
 
+/* stackable credentials callout (Learn page) */
+.stack{margin-top:clamp(34px,5vh,52px);padding:clamp(26px,4vh,38px) clamp(24px,4vw,40px);
+  border:1px solid var(--line);border-radius:18px;
+  background:linear-gradient(160deg,rgba(14,30,51,.5),rgba(10,22,40,.35))}
+.stack-eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.stack-lede{font-size:15.5px;color:var(--cream-dim);max-width:680px;margin-bottom:26px}
+.stack-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.stack-courses{display:flex;gap:8px}
+.stack-courses span{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.08em;color:var(--cream);
+  border:1px solid var(--line);border-radius:100px;padding:8px 14px;background:rgba(250,246,238,.04)}
+.stack-arw{color:var(--gold);font-size:20px;line-height:1}
+.stack-cred>div{margin-bottom:8px}
+.stack-cred>div:last-child{margin-bottom:0}
+.stack-cred strong{font-family:"Fraunces";font-weight:430;font-size:17px;color:var(--cream);display:block;letter-spacing:-.01em}
+.stack-cred em{font-family:"JetBrains Mono",monospace;font-style:normal;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.stack-more{margin-top:24px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-dim);opacity:.7}
+@media (max-width:560px){.stack-arw{transform:rotate(90deg)}}
+
 /* talk rows (Speaking page) */
 .talk{display:grid;grid-template-columns:110px 1fr auto;gap:24px;align-items:baseline;padding:26px 0;border-top:1px solid var(--line);transition:padding-left .3s var(--ease)}
 .talk:last-child{border-bottom:1px solid var(--line)}
